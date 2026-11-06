@@ -1,6 +1,6 @@
-
 package com.fshora.app
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -78,7 +78,22 @@ class CustomerDashboardActivity : ComponentActivity() {
 
     private fun setupRecyclerView() {
         productAdapter = ProductAdapter(emptyList()) { product ->
-            // Navigasi detail produk akan dibuat pada tahap berikutnya.
+
+            val detailIntent = Intent(
+                this,
+                ProductDetailActivity::class.java
+            ).apply {
+                putExtra("PRODUCT_ID", product.id)
+                putExtra("PRODUCT_NAME", product.name)
+                putExtra("PRODUCT_CATEGORY", product.category)
+                putExtra("PRODUCT_DESCRIPTION", product.description)
+                putExtra("PRODUCT_PRICE", product.price)
+                putExtra("PRODUCT_STOCK", product.stock)
+                putExtra("PRODUCT_IMAGE_URL", product.imageUrl)
+                putExtra("PRODUCT_SELLER_ID", product.sellerId)
+            }
+
+            startActivity(detailIntent)
         }
 
         rvProducts.apply {
@@ -112,7 +127,6 @@ class CustomerDashboardActivity : ComponentActivity() {
                 selectedCategory = category
 
                 updateCategoryAppearance()
-
                 filterProducts()
             }
         }
@@ -121,11 +135,9 @@ class CustomerDashboardActivity : ComponentActivity() {
     }
 
     private fun updateCategoryAppearance() {
-
         categoryViews.forEach { (viewId, category) ->
 
             val categoryView = findViewById<TextView>(viewId)
-
             val isSelected = category == selectedCategory
 
             if (isSelected) {
@@ -134,10 +146,7 @@ class CustomerDashboardActivity : ComponentActivity() {
                 )
 
                 categoryView.setTextColor(
-                    ContextCompat.getColor(
-                        this,
-                        R.color.white
-                    )
+                    ContextCompat.getColor(this, R.color.white)
                 )
 
                 categoryView.setTypeface(
@@ -151,10 +160,7 @@ class CustomerDashboardActivity : ComponentActivity() {
                 )
 
                 categoryView.setTextColor(
-                    ContextCompat.getColor(
-                        this,
-                        R.color.primary
-                    )
+                    ContextCompat.getColor(this, R.color.primary)
                 )
 
                 categoryView.setTypeface(
@@ -229,7 +235,6 @@ class CustomerDashboardActivity : ComponentActivity() {
     }
 
     private fun filterProducts() {
-
         val filteredProducts = products.filter { product ->
 
             val categoryMatch =
@@ -249,11 +254,8 @@ class CustomerDashboardActivity : ComponentActivity() {
         }
 
         if (filteredProducts.isEmpty()) {
-
             showMessage("Produk tidak ditemukan.")
-
         } else {
-
             tvProductMessage.visibility = View.GONE
             rvProducts.visibility = View.VISIBLE
 
@@ -262,10 +264,8 @@ class CustomerDashboardActivity : ComponentActivity() {
     }
 
     private fun showMessage(message: String) {
-
         rvProducts.visibility = View.GONE
         tvProductMessage.visibility = View.VISIBLE
-
         tvProductMessage.text = message
 
         tvProductMessage.setTextColor(
