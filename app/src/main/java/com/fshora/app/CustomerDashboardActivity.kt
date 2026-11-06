@@ -1,5 +1,7 @@
+
 package com.fshora.app
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -13,6 +15,7 @@ import androidx.activity.ComponentActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class CustomerDashboardActivity : ComponentActivity() {
@@ -22,24 +25,30 @@ class CustomerDashboardActivity : ComponentActivity() {
     private lateinit var tvProductMessage: TextView
     private lateinit var productAdapter: ProductAdapter
 
+    private val auth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
 
     private var selectedCategory = "Semua"
     private var searchKeyword = ""
 
     private val products = mutableListOf<Product>()
-
     private val categoryViews = mutableMapOf<Int, String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_customer_dashboard)
 
+        if (auth.currentUser == null) {
+            openLogin()
+            return
+        }
+
         initializeViews()
         setupGreeting()
         setupRecyclerView()
         setupCategory()
         setupSearch()
+        setupLogout()
         loadProducts()
     }
 
@@ -123,9 +132,7 @@ class CustomerDashboardActivity : ComponentActivity() {
         categories.forEach { (viewId, category) ->
 
             findViewById<View>(viewId).setOnClickListener {
-
                 selectedCategory = category
-
                 updateCategoryAppearance()
                 filterProducts()
             }
@@ -144,25 +151,20 @@ class CustomerDashboardActivity : ComponentActivity() {
                 categoryView.setBackgroundResource(
                     R.drawable.bg_category_selected
                 )
-
                 categoryView.setTextColor(
                     ContextCompat.getColor(this, R.color.white)
                 )
-
                 categoryView.setTypeface(
                     null,
                     android.graphics.Typeface.BOLD
                 )
-
             } else {
                 categoryView.setBackgroundResource(
                     R.drawable.bg_category
                 )
-
                 categoryView.setTextColor(
                     ContextCompat.getColor(this, R.color.primary)
                 )
-
                 categoryView.setTypeface(
                     null,
                     android.graphics.Typeface.NORMAL
@@ -195,6 +197,26 @@ class CustomerDashboardActivity : ComponentActivity() {
         })
     }
 
+    private fun setupLogout() {
+        findViewById<View>(R.id.btnCustomerLogout)
+            .setOnClickListener {
+
+                AlertDialog.Builder(this)
+                    .setTitle("Konfirmasi Logout")
+                    .setMessage(
+                        "Apakah kamu yakin ingin keluar dari akun FASHORA?"
+                    )
+                    .setNegativeButton("Batal") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .setPositiveButton("Logout") { _, _ ->
+                        auth.signOut()
+                        openLogin()
+                    }
+                    .show()
+            }
+    }
+
     private fun loadProducts() {
         showMessage("Memuat produk...")
 
@@ -207,19 +229,29 @@ class CustomerDashboardActivity : ComponentActivity() {
 
                 for (document in result.documents) {
 
-                    val product = Product(
-                        id = document.id,
-                        name = document.getString("name") ?: "Tanpa Nama",
-                        category = document.getString("category") ?: "",
-                        description = document.getString("description") ?: "",
-                        price = (document.get("price") as? Number)?.toLong() ?: 0L,
-                        stock = (document.get("stock") as? Number)?.toLong() ?: 0L,
-                        imageUrl = document.getString("imageUrl") ?: "",
-                        sellerId = document.getString("sellerId") ?: "",
-                        isAvailable = document.getBoolean("isAvailable") ?: true
+                    products.add(
+                        Product(
+                            id = document.id,
+                            name = document.getString("name")
+                                ?: "Tanpa Nama",
+                            category = document.getString("category")
+                                ?: "",
+                            description = document.getString("description")
+                                ?: "",
+                            price = (
+                                    document.get("price") as? Number
+                                    )?.toLong() ?: 0L,
+                            stock = (
+                                    document.get("stock") as? Number
+                                    )?.toLong() ?: 0L,
+                            imageUrl = document.getString("imageUrl")
+                                ?: "",
+                            sellerId = document.getString("sellerId")
+                                ?: "",
+                            isAvailable = document.getBoolean("isAvailable")
+                                ?: true
+                        )
                     )
-
-                    products.add(product)
                 }
 
                 filterProducts()
@@ -228,8 +260,10 @@ class CustomerDashboardActivity : ComponentActivity() {
 
                 showMessage(
                     "Gagal memuat produk.\n" +
-                            (exception.localizedMessage
-                                ?: "Periksa koneksi internet.")
+                            (
+                                    exception.localizedMessage
+                                        ?: "Periksa koneksi internet."
+                                    )
                 )
             }
     }
@@ -244,11 +278,10 @@ class CustomerDashboardActivity : ComponentActivity() {
                             ignoreCase = true
                         )
 
-            val searchMatch =
-                product.name.contains(
-                    searchKeyword,
-                    ignoreCase = true
-                )
+            val searchMatch = product.name.contains(
+                searchKeyword,
+                ignoreCase = true
+            )
 
             categoryMatch && searchMatch
         }
@@ -258,7 +291,6 @@ class CustomerDashboardActivity : ComponentActivity() {
         } else {
             tvProductMessage.visibility = View.GONE
             rvProducts.visibility = View.VISIBLE
-
             productAdapter.updateProducts(filteredProducts)
         }
     }
@@ -274,5 +306,18 @@ class CustomerDashboardActivity : ComponentActivity() {
                 R.color.text_secondary
             )
         )
+    }
+
+    private fun openLogin() {
+        val loginIntent = Intent(
+            this,
+            LoginActivity::class.java
+        ).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+
+        startActivity(loginIntent)
+        finish()
     }
 }

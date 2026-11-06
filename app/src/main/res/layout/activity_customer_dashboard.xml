@@ -53,13 +53,24 @@
 
             <ImageButton
                 android:id="@+id/btnNotification"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
                 android:background="@drawable/bg_category"
                 android:src="@android:drawable/ic_dialog_info"
                 android:contentDescription="Notifikasi"
                 android:padding="11dp"
                 app:tint="@color/primary"/>
+
+            <ImageButton
+                android:id="@+id/btnCustomerLogout"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_marginStart="9dp"
+                android:background="@drawable/bg_category"
+                android:src="@android:drawable/ic_lock_power_off"
+                android:contentDescription="Logout"
+                android:padding="11dp"
+                app:tint="@color/error"/>
 
         </LinearLayout>
 
