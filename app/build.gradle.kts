@@ -45,6 +45,12 @@ dependencies {
 
     implementation(libs.material)
 
+    // RecyclerView
+    implementation("androidx.recyclerview:recyclerview:1.4.0")
+
+// Glide - Image Loader
+    implementation("com.github.bumptech.glide:glide:5.0.5")
+
     // Firebase
     implementation(platform("com.google.firebase:firebase-bom:34.5.0"))
     implementation("com.google.firebase:firebase-auth")
@@ -54,4 +60,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
+
+
 }
