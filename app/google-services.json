@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "514643514121",
+    "project_id": "fashora-42cbb",
+    "storage_bucket": "fashora-42cbb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:514643514121:android:659fdaf7d26e9eac6c79d8",
+        "android_client_info": {
+          "package_name": "com.fshora.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhDmjTyRct6PQbu5Pr3d_g11tvEBXoakQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

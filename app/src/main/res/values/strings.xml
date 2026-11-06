@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FASHORA</string>
+    <string name="app_tagline">Discover Your Style</string>
+    <string name="welcome_title">Temukan Gaya Terbaikmu</string>
+    <string name="welcome_subtitle">Fashion lokal, pilihan istimewa.</string>
+</resources>
