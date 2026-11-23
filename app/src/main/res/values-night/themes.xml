@@ -1,7 +1,22 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.FASHORA" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.FASHORA" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Warna Utama -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/accent</item>
+
+        <!-- Latar Belakang Aplikasi -->
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:colorBackground">@color/background</item>
+
+        <!-- Menyamakan Status Bar (Jam & Baterai) dengan Latar Alabaster -->
+        <item name="android:statusBarColor">@color/background</item>
+        <!-- Ikon jam, sinyal, & baterai dibuat gelap agar terbaca jelas di atas latar terang -->
+        <item name="android:windowLightStatusBar">true</item>
+
+        <!-- Menyamakan Navigation Bar Bawah HP -->
+        <item name="android:navigationBarColor">@color/surface</item>
+        <item name="android:windowLightNavigationBar">true</item>
     </style>
 </resources>

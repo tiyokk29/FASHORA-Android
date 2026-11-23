@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#234B3C</color>
-    <color name="primary_dark">#19382D</color>
-    <color name="secondary">#C7DCCB</color>
-    <color name="accent">#E8BFA8</color>
+    <!-- Matte Charcoal & Jet Black (Dinding Aksen & Rangka) -->
+    <color name="primary">#1C1C1E</color>
+    <color name="primary_dark">#111113</color>
 
-    <color name="background">#F7F8F5</color>
+    <!-- Cool Slate Grey (Sofa & Dinding Abu-abu) -->
+    <color name="secondary">#D8D9DD</color>
+
+    <!-- Warm Camel / Ochre (Selimut & Bantal Aksen) -->
+    <color name="accent">#C69249</color>
+
+    <!-- Cool Light Ash & Crisp White (Lantai Terang & Meja Putih) -->
+    <color name="background">#EFEFF1</color>
     <color name="surface">#FFFFFF</color>
 
-    <color name="text_primary">#262B29</color>
-    <color name="text_secondary">#777F79</color>
+    <!-- Typography Hierarchy -->
+    <color name="text_primary">#1C1C1E</color>
+    <color name="text_secondary">#636569</color>
 
-    <color name="success">#39845B</color>
-    <color name="warning">#E5A34B</color>
-    <color name="error">#D9534F</color>
+    <!-- Semantic Status -->
+    <color name="success">#2E6F40</color>
+    <color name="warning">#C69249</color>
+    <color name="error">#C93B3B</color>
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>

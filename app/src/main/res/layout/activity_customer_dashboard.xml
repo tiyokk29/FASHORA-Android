@@ -1,303 +1,335 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/background"
-    android:fillViewport="true"
-    android:clipToPadding="false">
+    android:fitsSystemWindows="true">
 
-    <LinearLayout
+    <!-- KONTEN KATALOG (TAB 1) -->
+    <ScrollView
+        android:id="@+id/layoutCatalogContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="24dp">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:clipToPadding="false">
 
-        <!-- HEADER -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:paddingTop="24dp"
-            android:paddingBottom="16dp">
+            android:orientation="vertical"
+            android:paddingBottom="28dp">
 
+            <!-- HEADER -->
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="22dp"
+                android:paddingEnd="22dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="14dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="FASHORA"
-                    android:textColor="@color/primary"
-                    android:textSize="23sp"
-                    android:textStyle="bold"
-                    android:letterSpacing="0.08"/>
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tvGreeting"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="Halo, Fashion Lover!"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="13sp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/app_name"
+                        android:fontFamily="serif"
+                        android:textColor="@color/primary"
+                        android:textSize="26sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.14"/>
+
+                    <TextView
+                        android:id="@+id/tvGreeting"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/default_greeting"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="13sp"/>
+
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/btnCustomerLogout"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_category"
+                    android:src="@android:drawable/ic_lock_power_off"
+                    android:contentDescription="@string/cd_logout"
+                    android:padding="13dp"
+                    app:tint="@color/primary"/>
 
             </LinearLayout>
 
-            <ImageButton
-                android:id="@+id/btnNotification"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:background="@drawable/bg_category"
-                android:src="@android:drawable/ic_dialog_info"
-                android:contentDescription="Notifikasi"
-                android:padding="11dp"
-                app:tint="@color/primary"/>
-
-            <ImageButton
-                android:id="@+id/btnCustomerLogout"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:layout_marginStart="9dp"
-                android:background="@drawable/bg_category"
-                android:src="@android:drawable/ic_lock_power_off"
-                android:contentDescription="Logout"
-                android:padding="11dp"
-                app:tint="@color/error"/>
-
-        </LinearLayout>
-
-        <!-- SEARCH -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilSearch"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginTop="8dp"
-            android:hint="Cari produk fashion..."
-            app:boxBackgroundMode="outline"
-            app:boxCornerRadiusTopStart="14dp"
-            app:boxCornerRadiusTopEnd="14dp"
-            app:boxCornerRadiusBottomStart="14dp"
-            app:boxCornerRadiusBottomEnd="14dp"
-            app:startIconDrawable="@android:drawable/ic_menu_search"
-            app:boxStrokeColor="@color/secondary">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etSearch"
+            <!-- SEARCH BAR ELEGAN -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilSearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:textSize="14sp"
-                android:inputType="text"
-                android:imeOptions="actionSearch"/>
+                android:layout_marginStart="22dp"
+                android:layout_marginEnd="22dp"
+                android:layout_marginTop="6dp"
+                android:hint="@string/search_hint"
+                app:boxBackgroundMode="outline"
+                app:boxBackgroundColor="@color/surface"
+                app:boxCornerRadiusTopStart="16dp"
+                app:boxCornerRadiusTopEnd="16dp"
+                app:boxCornerRadiusBottomStart="16dp"
+                app:boxCornerRadiusBottomEnd="16dp"
+                app:startIconDrawable="@android:drawable/ic_menu_search"
+                app:startIconTint="@color/text_secondary"
+                app:boxStrokeColor="@color/secondary"
+                app:boxStrokeWidth="1dp"
+                app:hintTextColor="@color/text_secondary">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp"
+                    android:inputType="text"
+                    android:imeOptions="actionSearch"/>
 
-        <!-- PROMO BANNER -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="155dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginTop="22dp"
-            android:background="@drawable/bg_promo_banner"
-            android:orientation="vertical"
-            android:gravity="center_vertical"
-            android:padding="20dp">
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="EXPLORE YOUR STYLE"
-                android:textColor="@color/white"
-                android:textSize="11sp"
-                android:letterSpacing="0.12"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:layout_width="230dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="9dp"
-                android:text="Tampil percaya diri dengan fashion lokal pilihan."
-                android:textColor="@color/white"
-                android:textSize="19sp"
-                android:textStyle="bold"
-                android:maxLines="2"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Discover Your Style"
-                android:textColor="@color/secondary"
-                android:textSize="12sp"/>
-
-        </LinearLayout>
-
-        <!-- CATEGORY HEADER -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:layout_marginTop="26dp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Kategori"
-                android:textColor="@color/text_primary"
-                android:textSize="18sp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/tvAllCategories"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Lihat semua"
-                android:textColor="@color/primary"
-                android:textSize="12sp"/>
-
-        </LinearLayout>
-
-        <!-- CATEGORY LIST -->
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:scrollbars="none"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp">
-
+            <!-- LUXURY BOUTIQUE BANNER -->
             <LinearLayout
-                android:id="@+id/categoryContainer"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginStart="22dp"
+                android:layout_marginEnd="22dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_promo_banner"
+                android:orientation="vertical"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="24dp">
 
                 <TextView
-                    android:id="@+id/catAll"
                     android:layout_width="wrap_content"
-                    android:layout_height="38dp"
-                    android:gravity="center"
-                    android:paddingStart="18dp"
-                    android:paddingEnd="18dp"
-                    android:background="@drawable/bg_category_selected"
-                    android:text="Semua"
-                    android:textColor="@color/white"
-                    android:textSize="12sp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/banner_tag"
+                    android:textColor="@color/accent"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.16"
                     android:textStyle="bold"/>
 
                 <TextView
-                    android:id="@+id/catMen"
-                    android:layout_width="wrap_content"
-                    android:layout_height="38dp"
-                    android:layout_marginStart="9dp"
-                    android:gravity="center"
-                    android:paddingStart="18dp"
-                    android:paddingEnd="18dp"
-                    android:background="@drawable/bg_category"
-                    android:text="Pria"
-                    android:textColor="@color/primary"
-                    android:textSize="12sp"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="serif"
+                    android:text="@string/banner_title"
+                    android:textColor="@color/white"
+                    android:textSize="19sp"
+                    android:lineSpacingExtra="5dp"/>
+
+                <View
+                    android:layout_width="36dp"
+                    android:layout_height="1.5dp"
+                    android:layout_marginTop="14dp"
+                    android:background="@color/accent"/>
 
                 <TextView
-                    android:id="@+id/catWomen"
                     android:layout_width="wrap_content"
-                    android:layout_height="38dp"
-                    android:layout_marginStart="9dp"
-                    android:gravity="center"
-                    android:paddingStart="18dp"
-                    android:paddingEnd="18dp"
-                    android:background="@drawable/bg_category"
-                    android:text="Wanita"
-                    android:textColor="@color/primary"
-                    android:textSize="12sp"/>
-
-                <TextView
-                    android:id="@+id/catShoes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="38dp"
-                    android:layout_marginStart="9dp"
-                    android:gravity="center"
-                    android:paddingStart="18dp"
-                    android:paddingEnd="18dp"
-                    android:background="@drawable/bg_category"
-                    android:text="Sepatu"
-                    android:textColor="@color/primary"
-                    android:textSize="12sp"/>
-
-                <TextView
-                    android:id="@+id/catBags"
-                    android:layout_width="wrap_content"
-                    android:layout_height="38dp"
-                    android:layout_marginStart="9dp"
-                    android:gravity="center"
-                    android:paddingStart="18dp"
-                    android:paddingEnd="18dp"
-                    android:background="@drawable/bg_category"
-                    android:text="Tas"
-                    android:textColor="@color/primary"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/banner_subtitle"
+                    android:textColor="#C8CACF"
                     android:textSize="12sp"/>
 
             </LinearLayout>
 
-        </HorizontalScrollView>
-
-        <!-- PRODUCT HEADER -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:layout_marginTop="28dp"
-            android:layout_marginBottom="10dp">
-
+            <!-- CATEGORY HEADER -->
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Produk Pilihan"
+                android:paddingStart="22dp"
+                android:paddingEnd="22dp"
+                android:layout_marginTop="26dp"
+                android:text="@string/label_category"
                 android:textColor="@color/text_primary"
-                android:textSize="18sp"
-                android:textStyle="bold"/>
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.03"/>
 
-            <TextView
-                android:id="@+id/tvSeeAllProducts"
-                android:layout_width="wrap_content"
+            <!-- CATEGORY PILLS -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Terbaru"
-                android:textColor="@color/text_secondary"
-                android:textSize="12sp"/>
+                android:layout_marginTop="12dp"
+                android:scrollbars="none"
+                android:clipToPadding="false"
+                android:paddingStart="22dp"
+                android:paddingEnd="22dp">
+
+                <LinearLayout
+                    android:id="@+id/categoryContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/catAll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:minWidth="72dp"
+                        android:gravity="center"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:background="@drawable/bg_category_selected"
+                        android:text="@string/cat_all"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/catMen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:minWidth="72dp"
+                        android:layout_marginStart="10dp"
+                        android:gravity="center"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:background="@drawable/bg_category"
+                        android:text="@string/cat_men"
+                        android:textColor="@color/primary"
+                        android:textSize="13sp"/>
+
+                    <TextView
+                        android:id="@+id/catWomen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:minWidth="72dp"
+                        android:layout_marginStart="10dp"
+                        android:gravity="center"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:background="@drawable/bg_category"
+                        android:text="@string/cat_women"
+                        android:textColor="@color/primary"
+                        android:textSize="13sp"/>
+
+                    <TextView
+                        android:id="@+id/catShoes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:minWidth="72dp"
+                        android:layout_marginStart="10dp"
+                        android:gravity="center"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:background="@drawable/bg_category"
+                        android:text="@string/cat_shoes"
+                        android:textColor="@color/primary"
+                        android:textSize="13sp"/>
+
+                    <TextView
+                        android:id="@+id/catBags"
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:minWidth="72dp"
+                        android:layout_marginStart="10dp"
+                        android:gravity="center"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:background="@drawable/bg_category"
+                        android:text="@string/cat_bags"
+                        android:textColor="@color/primary"
+                        android:textSize="13sp"/>
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <!-- PRODUCT HEADER -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="22dp"
+                android:paddingEnd="22dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginBottom="12dp"
+                android:text="@string/label_featured_products"
+                android:textColor="@color/text_primary"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.03"/>
+
+            <!-- RECYCLERVIEW PRODUCT -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvProducts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                android:paddingBottom="16dp"
+                android:overScrollMode="never"/>
 
         </LinearLayout>
 
-        <!-- RECYCLERVIEW PRODUCT -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvProducts"
+    </ScrollView>
+
+    <!-- KONTEN PESANAN SAYA (TAB 2) -->
+    <LinearLayout
+        android:id="@+id/layoutOrdersContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="22dp"
+        android:visibility="gone">
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:nestedScrollingEnabled="false"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:paddingBottom="16dp"
-            android:overScrollMode="never"/>
+            android:fontFamily="serif"
+            android:text="@string/label_my_orders"
+            android:textColor="@color/text_primary"
+            android:textSize="22sp"
+            android:textStyle="bold"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="16dp">
+
+            <LinearLayout
+                android:id="@+id/llOrderList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"/>
+
+        </ScrollView>
 
     </LinearLayout>
 
-</ScrollView>
+    <!-- BOTTOM NAVIGATION BAR -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavCustomer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/surface"
+        app:elevation="8dp"
+        app:itemIconTint="@color/primary"
+        app:itemTextColor="@color/primary"
+        app:menu="@menu/menu_customer_bottom"/>
+
+</LinearLayout>

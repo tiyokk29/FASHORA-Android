@@ -1,4 +1,3 @@
-
 package com.fshora.app
 
 import android.app.AlertDialog
@@ -10,13 +9,18 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.ScrollView
 import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import java.text.NumberFormat
+import java.util.Locale
 
 class CustomerDashboardActivity : ComponentActivity() {
 
@@ -49,6 +53,7 @@ class CustomerDashboardActivity : ComponentActivity() {
         setupCategory()
         setupSearch()
         setupLogout()
+        setupBottomNavigation()
         loadProducts()
     }
 
@@ -217,6 +222,30 @@ class CustomerDashboardActivity : ComponentActivity() {
             }
     }
 
+    private fun setupBottomNavigation() {
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavCustomer)
+        val catalogContainer = findViewById<ScrollView>(R.id.layoutCatalogContainer)
+        val ordersContainer = findViewById<LinearLayout>(R.id.layoutOrdersContainer)
+
+        bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_catalog -> {
+                    catalogContainer.visibility = View.VISIBLE
+                    ordersContainer.visibility = View.GONE
+                    loadProducts()
+                    true
+                }
+                R.id.nav_orders -> {
+                    catalogContainer.visibility = View.GONE
+                    ordersContainer.visibility = View.VISIBLE
+                    loadMyOrders()
+                    true
+                }
+                else -> false
+            }
+        }
+    }
+
     private fun loadProducts() {
         showMessage("Memuat produk...")
 
@@ -265,6 +294,88 @@ class CustomerDashboardActivity : ComponentActivity() {
                                         ?: "Periksa koneksi internet."
                                     )
                 )
+            }
+    }
+
+    private fun loadMyOrders() {
+        val buyerId = auth.currentUser?.uid ?: return
+        val orderListLayout = findViewById<LinearLayout>(R.id.llOrderList)
+        orderListLayout.removeAllViews()
+
+        val statusView = TextView(this).apply {
+            text = "Memuat riwayat pesanan..."
+            textSize = 14f
+            setTextColor(
+                ContextCompat.getColor(
+                    this@CustomerDashboardActivity,
+                    R.color.text_secondary
+                )
+            )
+        }
+        orderListLayout.addView(statusView)
+
+        db.collection("orders")
+            .whereEqualTo("buyerId", buyerId)
+            .get()
+            .addOnSuccessListener { snapshot ->
+                orderListLayout.removeAllViews()
+                if (snapshot.isEmpty) {
+                    statusView.text = "Belum ada riwayat pesanan."
+                    orderListLayout.addView(statusView)
+                    return@addOnSuccessListener
+                }
+
+                val formatter = NumberFormat.getCurrencyInstance(Locale("id", "ID"))
+                for (doc in snapshot.documents) {
+                    val name = doc.getString("productName") ?: "Produk"
+                    val qty = doc.getLong("quantity") ?: 1L
+                    val total = doc.getLong("totalPrice") ?: 0L
+                    val status = doc.getString("status") ?: "Diproses"
+                    val address = doc.getString("shippingAddress") ?: "-"
+
+                    val card = LinearLayout(this).apply {
+                        orientation = LinearLayout.VERTICAL
+                        setBackgroundResource(R.drawable.bg_category)
+                        setPadding(36, 30, 36, 30)
+                        layoutParams = LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT
+                        ).apply { bottomMargin = 24 }
+                    }
+
+                    val tvTitle = TextView(this).apply {
+                        text = "$name (${qty}x)"
+                        textSize = 16f
+                        setTypeface(null, android.graphics.Typeface.BOLD)
+                        setTextColor(
+                            ContextCompat.getColor(
+                                this@CustomerDashboardActivity,
+                                R.color.text_primary
+                            )
+                        )
+                    }
+
+                    val tvDetail = TextView(this).apply {
+                        text = "Total: ${formatter.format(total)}\nAlamat: $address\nStatus: $status"
+                        textSize = 13f
+                        setPadding(0, 12, 0, 0)
+                        setTextColor(
+                            ContextCompat.getColor(
+                                this@CustomerDashboardActivity,
+                                R.color.text_secondary
+                            )
+                        )
+                    }
+
+                    card.addView(tvTitle)
+                    card.addView(tvDetail)
+                    orderListLayout.addView(card)
+                }
+            }
+            .addOnFailureListener { e ->
+                orderListLayout.removeAllViews()
+                statusView.text = "Gagal memuat pesanan: ${e.localizedMessage ?: "Periksa koneksi."}"
+                orderListLayout.addView(statusView)
             }
     }
 
@@ -319,5 +430,12 @@ class CustomerDashboardActivity : ComponentActivity() {
 
         startActivity(loginIntent)
         finish()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (::rvProducts.isInitialized && auth.currentUser != null) {
+            loadProducts()
+        }
     }
 }

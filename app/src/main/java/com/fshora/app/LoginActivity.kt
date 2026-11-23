@@ -1,4 +1,3 @@
-
 package com.fshora.app
 
 import android.content.Intent
@@ -9,7 +8,9 @@ import androidx.activity.ComponentActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.firestore.FirebaseFirestore
 
 class LoginActivity : ComponentActivity() {
@@ -131,23 +132,38 @@ class LoginActivity : ComponentActivity() {
                             startActivity(intent)
                             finish()
                         }
-                        .addOnFailureListener { exception ->
+                        .addOnFailureListener {
                             auth.signOut()
                             setLoading(false)
-                            showMessage(
-                                exception.localizedMessage
-                                    ?: "Gagal mengambil profil pengguna."
-                            )
+                            showMessage("Gagal mengambil profil pengguna. Periksa koneksi internet.")
                         }
 
                 } else {
                     setLoading(false)
-                    showMessage(
-                        task.exception?.localizedMessage
-                            ?: "Login gagal. Periksa email dan password."
-                    )
+                    val errorMessage = mapAuthErrorMessage(task.exception)
+                    showMessage(errorMessage)
                 }
             }
+    }
+
+    private fun mapAuthErrorMessage(exception: Exception?): String {
+        if (exception is FirebaseNetworkException) {
+            return "Tidak ada koneksi internet. Periksa jaringan kamu."
+        }
+
+        if (exception is FirebaseAuthException) {
+            return when (exception.errorCode) {
+                "ERROR_INVALID_CREDENTIAL",
+                "ERROR_WRONG_PASSWORD",
+                "ERROR_USER_NOT_FOUND" -> "Email atau password salah."
+                "ERROR_INVALID_EMAIL" -> "Format email tidak valid."
+                "ERROR_USER_DISABLED" -> "Akun ini telah dinonaktifkan."
+                "ERROR_TOO_MANY_REQUESTS" -> "Terlalu banyak percobaan login. Coba lagi beberapa saat."
+                else -> "Login gagal. Periksa kembali email dan password kamu."
+            }
+        }
+
+        return "Email atau password salah."
     }
 
     private fun setLoading(isLoading: Boolean) {

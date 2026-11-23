@@ -1,7 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">FASHORA</string>
-    <string name="app_tagline">Discover Your Style</string>
-    <string name="welcome_title">Temukan Gaya Terbaikmu</string>
-    <string name="welcome_subtitle">Fashion lokal, pilihan istimewa.</string>
+    <string name="app_tagline">Koleksi Fashion Harian Terkurasi</string>
+    <string name="default_greeting">Halo, Selamat Berbelanja</string>
+    <string name="search_hint">Cari kemeja, sepatu, atau tas…</string>
+    <string name="banner_tag">KOLEKSI TERBARU</string>
+    <string name="banner_title">Potongan rapi dan bahan nyaman untuk aktivitas harian.</string>
+    <string name="banner_subtitle">Pilih langsung dari katalog penjual terverifikasi</string>
+    <string name="label_category">Kategori</string>
+    <string name="cat_all">Semua</string>
+    <string name="cat_men">Pria</string>
+    <string name="cat_women">Wanita</string>
+    <string name="cat_shoes">Sepatu</string>
+    <string name="cat_bags">Tas</string>
+    <string name="label_featured_products">Katalog Produk</string>
+    <string name="label_my_orders">Pesanan Saya</string>
+    <string name="nav_catalog">Katalog</string>
+    <string name="nav_orders">Pesanan</string>
+    <string name="cd_logout">Keluar Akun</string>
 </resources>
